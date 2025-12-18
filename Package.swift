@@ -13,23 +13,14 @@ let package = Package(
             targets: ["Encept"]
         ),
         .executable(
-            name: "encept",
-            targets: ["encept"]
+            name: "encept-cli",
+            targets: ["encept-cli"]
         )
     ],
     targets: [
-        // Zig core library (pre-built)
-        .systemLibrary(
-            name: "EnceptCore",
-            path: "Sources/EnceptCore",
-            pkgConfig: nil,
-            providers: []
-        ),
-
         // Swift framework
         .target(
             name: "Encept",
-            dependencies: ["EnceptCore"],
             path: "Sources/Encept",
             swiftSettings: [
                 .enableExperimentalFeature("StrictConcurrency")
@@ -38,19 +29,16 @@ let package = Package(
 
         // CLI tool
         .executableTarget(
-            name: "encept",
+            name: "encept-cli",
             dependencies: ["Encept"],
-            path: "Sources/encept"
+            path: "Sources/CLI"
         ),
 
         // Tests
         .testTarget(
             name: "EnceptTests",
             dependencies: ["Encept"],
-            path: "Tests/EnceptTests",
-            resources: [
-                .copy("Resources")
-            ]
+            path: "Tests/EnceptTests"
         )
     ]
 )
